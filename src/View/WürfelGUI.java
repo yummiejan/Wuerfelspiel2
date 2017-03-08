@@ -13,15 +13,16 @@ public class WürfelGUI extends JFrame{
     private JTextArea textArea1;
     private JButton rollTheDiceButton;
     private JTextField targetTextField;
-    private JButton button1;
+    private JButton setNumberButton;
     private JLabel label1;
     private JRadioButton radioButton1;
-    private JRadioButton radioButton2;
-    private JRadioButton radioButton3;
-    private JRadioButton radioButton4;
+    private JButton restartGameButton;
+
+
     private int target;
-    private int firstRoll;
+    private int currentRoll;
     private boolean firstRollComplete;
+    private int diceFaces[] = {1,2,3,4,5,6};
 
     public WürfelGUI(){
         setVisible(true);
@@ -32,13 +33,13 @@ public class WürfelGUI extends JFrame{
         firstRollComplete = false;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        button1.addActionListener(new ActionListener() {
+        setNumberButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(!targetTextField.getText().isEmpty()) {
                     if(Integer.parseInt(targetTextField.getText()) > 6) {
                         target = Integer.parseInt(targetTextField.getText());
-                        button1.setEnabled(false);
+                        setNumberButton.setEnabled(false);
                         targetTextField.setEditable(false);
                         rollTheDiceButton.setEnabled(true);
                     }else {
@@ -50,15 +51,26 @@ public class WürfelGUI extends JFrame{
                 }
             }
         });
+
         rollTheDiceButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(!firstRollComplete) {
                     firstRollComplete = true;
-                    firstRoll = (int) (Math.random() * 6 + 1);
-                    displayRoll(firstRoll);
+                    currentRoll = (int) (Math.random() * 6 + 1);
+                    displayRoll(currentRoll);
                     rollTheDiceButton.setText("Tilt Dice" );
+                    radioButton1.setText("1");
                 }
+            }
+        });
+
+        //Restart Game
+
+        restartGameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                restartGame();
             }
         });
     }
@@ -89,4 +101,16 @@ public class WürfelGUI extends JFrame{
 
         }
     }
+    private void restartGame(){
+        firstRollComplete = false;
+        textArea1.setText("");
+        targetTextField.setText("");
+        targetTextField.setEditable(true);
+        setNumberButton.setEnabled(true);
+    }
+
+    private void chooseButtonText(int r, int a[]){
+
+    }
+
 }
